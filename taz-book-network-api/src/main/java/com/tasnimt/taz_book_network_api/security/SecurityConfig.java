@@ -29,6 +29,10 @@ public class SecurityConfig {
                         .antMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .addFilterBefore(jwtAuthFilter, JwtFilter.class)
+                .formLogin(withDefaults())
+                .build();
+
 
     }
 }
