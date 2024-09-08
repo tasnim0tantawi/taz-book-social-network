@@ -1,0 +1,39 @@
+services:
+  postgres:
+    container_name: postgres-sql-taz
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: taz_book_network
+      PGDATA: /var/lib/postgresql/data
+
+    volumes:
+      - postgres: /data/postgres
+
+    ports:
+        - "5432:5432"
+
+    networks:
+        - taz-network
+
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: maildev-taz
+    image: maildev/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+    networks:
+      - taz-network
+    restart: unless-stopped
+
+networks:
+  taz-network:
+    driver: bridge
+
+volumes:
+    postgres:
+
+
